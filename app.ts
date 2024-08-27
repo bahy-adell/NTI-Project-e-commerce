@@ -1,9 +1,28 @@
+import { Server } from 'http';
 import express from 'express';
 import dotenv from "dotenv";
-const app:express.Application = express();
+import database from "./config/database";
+import AllRoutes from './routes/index';
+
+
+const app: express.Application = express();
+
+let server: Server;
 dotenv.config();
 app.use(express.json())
-app.get('/',function(req:express.Request,res:express.Response){
-    res.json({messag :'hello bahy'})
+
+database();
+AllRoutes(app);
+
+
+server = app.listen(process.env.PORT, () => {
+    console.log(`App is listen on port ${process.env.PORT}`);
+  })
+  
+  process.on('unhandledRejection', (err: Error) => {
+    console.error(`unhandledRejection ${err.name} | ${err.message}`);
+    server.close(() => {
+      console.error('shutting the application down');
+      process.exit(1);
+    });
 });
-app.listen(process.env.PORT);
