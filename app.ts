@@ -13,7 +13,7 @@ app.use(express.json())
 
 database();
 AllRoutes(app);
-
+console.log(process.env.NODE_ENV);
 
 server = app.listen(process.env.PORT, () => {
     console.log(`App is listen on port ${process.env.PORT}`);

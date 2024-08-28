@@ -1,14 +1,19 @@
 import { Router } from "express";
-import { createCategory, deleteCategory, getALLCategories, getCategory, updatCategory } from "../controllers/categories";
+import { createCategory, deleteCategory, getCategories, getCategory, updateCategory } from "../controllers/categories";
+import { createCategoryValidator, deleteCategoryValidator, getCategoryValidator, updateCategoryValidator } from "../Utils/validation/categoriesValidator";
+import subcategoriesRoute from "./subCategoriesRoute";
 
-const categoriesRoute :Router=Router();
-categoriesRoute.route(`/`)
-.get(getALLCategories)
-.post(createCategory);
+const categoriesRoute: Router = Router();
 
-categoriesRoute.route(`/:id`)
-.get(getCategory)
-.put(updatCategory)
-.delete(deleteCategory);
+categoriesRoute.use('/:categoryId/subcategories', subcategoriesRoute);
+
+categoriesRoute.route('/')
+  .get(getCategories)
+  .post(createCategoryValidator, createCategory);
+
+categoriesRoute.route('/:id')
+  .get(getCategoryValidator, getCategory)
+  .put(updateCategoryValidator, updateCategory)
+  .delete(deleteCategoryValidator, deleteCategory);
 
 export default categoriesRoute;

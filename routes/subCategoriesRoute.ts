@@ -1,14 +1,15 @@
 import { Router } from "express";
-import { createSubcategory, deleteSubcategory, getALLSubcategories, getSubcategory, updateSubcategory } from "../controllers/subCategories";
-const subcategoriesRoute: Router = Router();
+import { createSubcategory, deleteSubcategory, filterData, getSubcategories, getSubcategory, updateSubcategory } from "../controllers/subCategories";
+import { createSubcategoryValidator, deleteSubcategoryValidator, getSubcategoryValidator, updateSubcategoryValidator } from "../Utils/validation/subcategoriesValidator";
+const subcategoriesRoute: Router = Router({ mergeParams: true });
 
 subcategoriesRoute.route('/')
-  .get(getALLSubcategories)
-  .post( createSubcategory);
+  .get(filterData, getSubcategories)
+  .post(createSubcategoryValidator, createSubcategory);
 
 subcategoriesRoute.route('/:id')
-  .get( getSubcategory)
-  .put(updateSubcategory)
-  .delete( deleteSubcategory);
+  .get(getSubcategoryValidator, getSubcategory)
+  .put(updateSubcategoryValidator, updateSubcategory)
+  .delete(deleteSubcategoryValidator, deleteSubcategory);
 
 export default subcategoriesRoute;
