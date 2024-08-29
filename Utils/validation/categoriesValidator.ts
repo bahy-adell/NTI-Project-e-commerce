@@ -28,18 +28,13 @@ export const deleteCategoryValidator: RequestHandler[] = [
     .custom(async (val) => {
       const subcategories = await subCategoriesModel.find({ category: val });
       if (subcategories.length > 0) {
-        // TODO: less performance
-        // subcategories.map(async (subcategory: SubCategories) => {
-        //   await subCategoriesModel.findByIdAndDelete(subcategory._id)
-        // })
-
-        // * bulkWrite more performance
         const bulkOption = subcategories.map((subcategory: SubCategories) => ({
           deleteOne: { filter: { _id: subcategory._id } }
         }))
         await subCategoriesModel.bulkWrite(bulkOption)
       }
       return true;
+      
     }),
   validatorMiddleware
 ]

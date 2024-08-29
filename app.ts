@@ -1,28 +1,24 @@
 import { Server } from 'http';
 import express from 'express';
 import dotenv from "dotenv";
-import database from "./config/database";
-import AllRoutes from './routes/index';
+import database from './config/database';
+import mountRoutes from './routes';
 
-
-const app: express.Application = express();
-
+const app: express.Application = express()
 let server: Server;
 dotenv.config();
 app.use(express.json())
-
+app.use(express.static('uploads'))
 database();
-AllRoutes(app);
-console.log(process.env.NODE_ENV);
-
+mountRoutes(app);
 server = app.listen(process.env.PORT, () => {
-    console.log(`App is listen on port ${process.env.PORT}`);
-  })
-  
-  process.on('unhandledRejection', (err: Error) => {
-    console.error(`unhandledRejection ${err.name} | ${err.message}`);
-    server.close(() => {
-      console.error('shutting the application down');
-      process.exit(1);
-    });
+  console.log(`App is listen on port ${process.env.PORT}`);
+})
+
+process.on('unhandledRejection', (err: Error) => {
+  console.error(`unhandledRejection ${err.name} | ${err.message}`);
+  server.close(() => {
+    console.error('shutting the application down');
+    process.exit(1);
+  });
 });

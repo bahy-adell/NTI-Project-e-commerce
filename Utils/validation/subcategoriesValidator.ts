@@ -10,7 +10,7 @@ export const createSubcategoryValidator: RequestHandler[] = [
   check('category')
     .notEmpty().withMessage('Category is Required')
     .isMongoId().withMessage('Invalid Mongo Id')
-    // * Check if category exist
+    
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
