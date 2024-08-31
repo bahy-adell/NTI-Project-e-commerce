@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleWares/validatorMiddelware";
-import categoriesModel from "../../models/categoriesModels";
-import subCategoriesModel from "../../models/subCategoriesModels";
+import categoriesModel from "../../models/categoriesModel";
+import subCategoriesModel from "../../models/subCategoriesModel";
 import { SubCategories } from "../../interfaces/subCategories";
 
 export const createProductValidator: RequestHandler[] = [
@@ -40,7 +40,7 @@ export const createProductValidator: RequestHandler[] = [
   check('category')
     .notEmpty().withMessage('Category is Required')
     .isMongoId().withMessage('Invalid Mongo Id')
-   
+    // * Check if category exist
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -51,7 +51,7 @@ export const createProductValidator: RequestHandler[] = [
   check('subcategory')
     .notEmpty().withMessage('subcategory is Required')
     .isMongoId().withMessage('Invalid Mongo Id')
-   
+    // * Check if subcategory exist
     .custom(async (val, { req }) => {
       const subcategory: SubCategories | null = await subCategoriesModel.findById(val);
       if (!subcategory) {
@@ -100,7 +100,7 @@ export const updateProductValidator: RequestHandler[] = [
   check('category')
     .optional()
     .isMongoId().withMessage('Invalid Mongo Id')
-    
+    // * Check if category exist
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -111,7 +111,7 @@ export const updateProductValidator: RequestHandler[] = [
   check('subcategory')
     .optional()
     .isMongoId().withMessage('Invalid Mongo Id')
-    
+    // * Check if subcategory exist
     .custom(async (val, { req }) => {
       const subcategory: SubCategories | null = await subCategoriesModel.findById(val);
       if (!subcategory) {

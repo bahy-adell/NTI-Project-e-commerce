@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
 import validatorMiddleware from "../../middleWares/validatorMiddelware";
-import categoriesModel from "../../models/categoriesModels";
+import categoriesModel from "../../models/categoriesModel";
 
 export const createSubcategoryValidator: RequestHandler[] = [
   check('name')
@@ -10,7 +10,7 @@ export const createSubcategoryValidator: RequestHandler[] = [
   check('category')
     .notEmpty().withMessage('Category is Required')
     .isMongoId().withMessage('Invalid Mongo Id')
-    
+    // * Check if category exist
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {

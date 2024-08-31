@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import { PaginationQuery, queryString, SearchQuery } from "../interfaces/features";
 
-
-export class Features {
+class Features {
   public paginationResult: PaginationQuery ={};
   constructor(public mongooseQuery: mongoose.Query<any[], any>, private readonly queryString: queryString)
    { }
@@ -22,7 +21,7 @@ export class Features {
   sort() {
     if (this.queryString.sort) {
       const sortBy: string = this.queryString.sort.split(',').join(' ')
-      
+  
       this.mongooseQuery = this.mongooseQuery.sort(sortBy);
     } else {
       this.mongooseQuery = this.mongooseQuery.sort('-createdAt')

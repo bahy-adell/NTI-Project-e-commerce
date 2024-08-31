@@ -1,7 +1,7 @@
 
 import { Request } from "express";
 import multer from "multer";
-import ApiErrors from "../Utils/apiErrors";
+import ApiErrors from "../utils/apiErrors";
 import { ImageFields } from "../interfaces/uploadFields";
 
 const uploadOptions = (): multer.Multer => {
