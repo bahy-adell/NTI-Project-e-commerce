@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { Products } from "./products";
+
 type Role = 'manager' | 'admin' | 'user'
 export interface Users extends Document {
   email: string;
@@ -13,11 +14,10 @@ export interface Users extends Document {
   resetCode: string | undefined;
   resetCodeExpireTime: Date | number | undefined;
   resetCodeVerify: boolean | undefined;
-  address: Address;
+  address: Address[];
 }
-
-interface Address {
+export interface  Address extends Document  {
   street: string ;
   city: string;
   country: string;
-};
+}

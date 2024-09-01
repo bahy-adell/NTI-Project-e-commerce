@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
-import validatorMiddleware from "../../middlewares/validatorMiddleware";
+import validatorMiddleware from "../../middleWares/validatorMiddelware";
 
 export const addProductToCartValidator: RequestHandler[] = [
   check('product')

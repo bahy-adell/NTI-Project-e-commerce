@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
-import validatorMiddleware from "../../middlewares/validatorMiddleware";
+import validatorMiddleware from "../../middleWares/validatorMiddelware";
 import couponsModel from "../../models/couponsModel";
 
 export const createCouponValidator: RequestHandler[] = [

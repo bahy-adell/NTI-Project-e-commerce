@@ -2,13 +2,24 @@ import { Router } from "express";
 import { changeUserPassword, createUser, deleteUser, setLoggedUserId, getUser, getUsers, resizeUserImage, updateUser, uploadUserImage, updateLoggedUser, changeLoggedUserPassword } from "../controllers/users";
 import { changeLoggedUserPasswordValidator, changeUserPasswordValidator, createUserValidator, deleteUserValidator, getUserValidator, updateLoggedUserValidator, updateUserValidator } from "../utils/validation/usersValidator";
 import { allowedTo, checkActive, protectRoutes } from "../controllers/auth";
-import { Address } from "../controllers/address";
+import { addAddress, removeAddress } from "../controllers/address";
+
 const usersRoute: Router = Router();
+
+const AddressRoutes: Router = Router();
+
+AddressRoutes.use(protectRoutes, checkActive, allowedTo('user'))
+
+AddressRoutes.route('/')
+    .post(addAddress)
+AddressRoutes.route('/:addressId')
+    .delete(removeAddress)
+
 usersRoute.use(protectRoutes, checkActive);
 
 usersRoute.route('/me')
 .get(setLoggedUserId, getUser)
-.post(Address)
+
 usersRoute.put('/updateMe', updateLoggedUserValidator, updateLoggedUser)
 usersRoute.put('/changeMyPassword', changeLoggedUserPasswordValidator, changeLoggedUserPassword)
 usersRoute.delete('/deleteMe', allowedTo('user'), setLoggedUserId, deleteUser)

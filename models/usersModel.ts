@@ -19,7 +19,7 @@ const usersSchema: Schema = new Schema<Users>({
   resetCode: String,
   resetCodeExpireTime: Date,
   resetCodeVerify: Boolean,
-  address: { type: addressSchema, required: true }
+  address: [{ type: addressSchema, required: true }]
 }, { timestamps: true });
 
 
