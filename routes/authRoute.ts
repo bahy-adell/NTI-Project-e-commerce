@@ -1,5 +1,6 @@
+
 import { Router } from "express";
-import { forgetPassword, login, resetCode, signup, verifyResetCode } from "../controllers/auth";
+import { forgetPassword, login, protectRoutes, resetCode, signup, verifyResetCode } from "../controllers/auth";
 import { loginValidator, resetCodeValidator, sendMailValidator, signupValidator } from "../utils/validation/authValidator";
 
 const authRoute: Router = Router();
