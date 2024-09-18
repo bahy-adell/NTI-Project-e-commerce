@@ -8,13 +8,13 @@ import hpp from 'hpp';
 import cors from 'cors';
 import database from './config/database';
 import mountRoutes from './routes';
-
+import path from 'path';
 const app: express.Application = express()
 let server: Server;
 dotenv.config();
 app.use(express.json({ limit: '10kb' }))
 app.use(cors({
-  origin: ['http://localhost:4200'],
+  origin: ['http://localhost:3959','http://localhost:4200'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -24,6 +24,8 @@ app.use(mongoSanitize());
 app.use(hpp({ whitelist: ['price', 'category', 'subcategory', 'ratingAverage', 'sold'] }));
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 app.use('/uploads', express.static('uploads'));
+
+
 database();
 mountRoutes(app);
 server = app.listen(process.env.PORT, () => {

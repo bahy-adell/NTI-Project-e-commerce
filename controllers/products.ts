@@ -18,7 +18,7 @@ export const resizeImages = asyncHandler(async (req: Request, res: Response, nex
       await sharp(req.files.cover[0].buffer)
         .toFormat('png')
         .png({ quality: 95 })
-        .toFile(`uploads/products/${coverName}`)
+        .toFile(`uploads/${coverName}`)
       req.body.cover = coverName;
     }
     if (req.files.images) {
@@ -28,7 +28,7 @@ export const resizeImages = asyncHandler(async (req: Request, res: Response, nex
         await sharp(img.buffer)
           .toFormat('png')
           .png({ quality: 95 })
-          .toFile(`uploads/products/${imageName}`)
+          .toFile(`uploads/${imageName}`)
         req.body.images.push(imageName)
       })
     }

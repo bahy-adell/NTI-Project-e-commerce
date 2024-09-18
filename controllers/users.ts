@@ -29,7 +29,7 @@ export const resizeUserImage = asyncHandler(async (req, res, next) => {
     await sharp(req.file.buffer)
       .toFormat('jpeg')
       .jpeg({ quality: 95 })
-      .toFile(`uploads/users/${imageName}`)
+      .toFile(`uploads/${imageName}`)
     req.body.image = imageName;
   }
   next();
@@ -55,10 +55,10 @@ export const updateLoggedUser = asyncHandler(async (req: Request, res: Response,
   res.status(200).json({ data: user, message: 'user updated successfully' })
 })
 export const changeLoggedUserPassword = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const user = await usersModel.findByIdAndUpdate(req.user?.id, {
+  const user:any = await usersModel.findByIdAndUpdate(req.user?.id, {
     password: await bcrypt.hash(req.body.password, 13),
     passwordChangedAt: Date.now()
   }, { new: true })
-  const token: string = createToken(user?._id)
+  const token: string = createToken(user?._id,user.role)
   res.status(200).json({ message: 'password changed successfully', token })
 });
